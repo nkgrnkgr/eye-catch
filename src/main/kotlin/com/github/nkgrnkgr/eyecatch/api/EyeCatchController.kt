@@ -13,13 +13,3 @@ class EyeCatchController {
         return createInitialValue()
     }
 }
-
-
-
-
-
-
-
-
-
-

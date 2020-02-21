@@ -1,4 +1,4 @@
-package com.example.eyecatch
+package com.github.nkgrnkgr.eyecatch
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

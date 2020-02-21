@@ -10,7 +10,6 @@ class CardContentController {
 
     @GetMapping
     fun getSiteData(): CardContent {
-        return createInitialValue();
+        return createInitialValue()
     }
-
 }

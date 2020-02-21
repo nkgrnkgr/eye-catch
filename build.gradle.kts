@@ -12,8 +12,11 @@ version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
+	jcenter()
 	mavenCentral()
 }
+
+val ktlint by configurations.creating
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -26,6 +29,28 @@ dependencies {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}
 	testImplementation("io.projectreactor:reactor-test")
+	ktlint("com.pinterest:ktlint:0.35.0")
+}
+
+
+task("ktlint", JavaExec::class) {
+	group = "verification"
+	description = "Check Kotlin code style."
+	main = "com.pinterest.ktlint.Main"
+	classpath = configurations.getByName("ktlint")
+	args("src/**/*.kt")
+}
+
+tasks.named("check") {
+	dependsOn( ktlint )
+}
+
+task("ktlintFormat", JavaExec::class) {
+	group = "formatting"
+	description = "Fix Kotlin code style deviations."
+	main = "com.pinterest.ktlint.Main"
+	classpath = configurations.getByName("ktlint")
+	args("-F", "src/**/*.kt")
 }
 
 tasks.withType<Test> {

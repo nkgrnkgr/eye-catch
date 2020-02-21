@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class EyecatchApplication
 
 fun main(args: Array<String>) {
-	runApplication<EyecatchApplication>(*args)
+    runApplication<EyecatchApplication>(*args)
 }

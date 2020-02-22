@@ -19,6 +19,7 @@ repositories {
 val ktlint by configurations.creating
 
 dependencies {
+	implementation("org.jsoup:jsoup:1.12.2")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

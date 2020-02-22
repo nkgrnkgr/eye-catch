@@ -10,6 +10,8 @@ an ApiServer for eye-catch-data
 curl -X GET http:localhost:8080/api/eyeCatch
 ```
 
+SampleData
+
 ```json
 {
     "eyeCatch": {

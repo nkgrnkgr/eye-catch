@@ -9,7 +9,7 @@ class EyeCatchService {
     fun createEyeCatchData(url: String): EyeCatch {
         val doc = Jsoup.connect(url).get()
         val metadataTags = doc.select("meta")
-        val eyeCatch = EyeCatch.Builder().title(doc.title())
+        val eyeCatch = EyeCatch.Builder().title(doc.title()).url(url)
 
         metadataTags.forEach { metadata ->
             when (metadata.attr("name")) {

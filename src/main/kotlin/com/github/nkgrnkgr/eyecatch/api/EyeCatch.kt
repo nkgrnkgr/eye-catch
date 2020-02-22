@@ -1,24 +1,24 @@
 package com.github.nkgrnkgr.eyecatch.api
 
 data class EyeCatch(
-        val themeColor: String?,
-        val card: String?,
-        val site: String?,
-        val creator: String?,
-        val title: String?,
-        val imageUrl: String?,
-        val description: String?,
-        val url: String?
+    val themeColor: String?,
+    val card: String?,
+    val site: String?,
+    val creator: String?,
+    val title: String?,
+    val imageUrl: String?,
+    val description: String?,
+    val url: String?
 ) {
     data class Builder(
-            var themeColor: String? = null,
-            var card: String? = null,
-            var site: String? = null,
-            var creator: String? = null,
-            var title: String? = null,
-            var imageUrl: String? = null,
-            var description: String? = null,
-            var url: String? = null
+        var themeColor: String? = null,
+        var card: String? = null,
+        var site: String? = null,
+        var creator: String? = null,
+        var title: String? = null,
+        var imageUrl: String? = null,
+        var description: String? = null,
+        var url: String? = null
     ) {
         fun themeColor(themeColor: String) = apply { this.themeColor = themeColor }
         fun card(card: String) = apply { this.card = card }
@@ -32,14 +32,13 @@ data class EyeCatch(
     }
 }
 
-fun createInitialValue(): EyeCatch {
+fun createSampleValue(): EyeCatch {
     return EyeCatch(themeColor = "themeColor",
-            card = "card",
-            site = "site",
-            creator = "creator",
-            title = "title",
-            imageUrl = "imageUrl",
-            description = "description",
-            url = "url")
+            card = "summary_large_image",
+            site = "@nkgrnkgr",
+            creator = "@nkgrnkgr",
+            title = "Nokogiri - Portfolio",
+            imageUrl = "https://raw.githubusercontent.com/nkgrnkgr/portfolio/master/src/images/top.png",
+            description = "Nokogiri - Portfolio",
+            url = "https://nkgr.app")
 }
-

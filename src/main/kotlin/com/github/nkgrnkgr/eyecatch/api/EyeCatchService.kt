@@ -1,9 +1,9 @@
 package com.github.nkgrnkgr.eyecatch.api
 
+import java.net.URI
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.springframework.stereotype.Service
-import java.net.URI
 
 @Service
 class EyeCatchService {
@@ -14,7 +14,10 @@ class EyeCatchService {
         val favicon = doc.selectFirst("link[rel='shortcut icon']")
         val icon = doc.selectFirst("link[rel='icon']")
 
-        val eyeCatch = EyeCatch.Builder().title(doc.title()).url(requestUrl).imageUrl(extractHref(favicon, icon))
+        val eyeCatch = EyeCatch.Builder()
+                .title(doc.title())
+                .url(requestUrl)
+                .imageUrl(convertPathRelativeToAbsolute(extractHref(icon, favicon), requestUrl))
 
         metadataTags.forEach { metadata ->
             when (metadata.attr("name")) {
@@ -42,16 +45,15 @@ fun convertPathRelativeToAbsolute(path: String, requestUrl: String): String {
     val requestUri = URI(requestUrl)
     val pathUri = URI(path)
 
-    if (!requestUri.isAbsolute) throw Exception("""Request Url '${requestUri}' is not absolute. """)
-    if (pathUri.isAbsolute) return pathUri.toString();
+    if (!requestUri.isAbsolute) throw Exception("""Request Url '$requestUri' is not absolute. """)
+    if (pathUri.isAbsolute) return pathUri.toString()
 
-    return """${requestUri.scheme}://${requestUri.host}${pathUri}"""
+    return """${requestUri.scheme}://${requestUri.host}$pathUri"""
 }
 
-fun extractHref(vararg elements:Element?): String {
+fun extractHref(vararg elements: Element?): String {
     val list = listOfNotNull(*elements)
     if (list.isEmpty()) return ""
 
     return list.first().attr("href")
 }
-

@@ -13,11 +13,12 @@ class EyeCatchService {
         val metadataTags = doc.select("meta")
         val favicon = doc.selectFirst("link[rel='shortcut icon']")
         val icon = doc.selectFirst("link[rel='icon']")
+        val appleTouchIcon = doc.selectFirst("link[rel='apple-touch-icon']")
 
         val eyeCatch = EyeCatch.Builder()
                 .title(doc.title())
                 .url(requestUrl)
-                .imageUrl(convertPathRelativeToAbsolute(extractHref(icon, favicon), requestUrl))
+                .imageUrl(convertPathRelativeToAbsolute(extractHref(appleTouchIcon, icon, favicon), requestUrl))
 
         metadataTags.forEach { metadata ->
             when (metadata.attr("name")) {
@@ -29,6 +30,7 @@ class EyeCatchService {
             }
 
             when (metadata.attr("property")) {
+                "og:site_name" -> eyeCatch.title(metadata.attr("content"))
                 "og:title" -> eyeCatch.title(metadata.attr("content"))
                 "og:image" -> { eyeCatch.imageUrl(convertPathRelativeToAbsolute(metadata.attr("content"), requestUrl)) }
                 "og:description" -> eyeCatch.description(metadata.attr("content"))

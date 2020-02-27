@@ -10,16 +10,21 @@ class EyeCatchService {
 
     fun createEyeCatchData(requestUrl: String): EyeCatch {
         val doc = Jsoup.connect(requestUrl).get()
-        val metadataTags = doc.select("meta")
+
         val favicon = doc.selectFirst("link[rel='shortcut icon']")
         val icon = doc.selectFirst("link[rel='icon']")
         val appleTouchIcon = doc.selectFirst("link[rel='apple-touch-icon']")
+        var href = extractHref(appleTouchIcon, icon, favicon)
 
         val eyeCatch = EyeCatch.Builder()
                 .title(doc.title())
                 .url(requestUrl)
-                .imageUrl(convertPathRelativeToAbsolute(extractHref(appleTouchIcon, icon, favicon), requestUrl))
 
+        if (href != null) {
+            eyeCatch.imageUrl(convertPathRelativeToAbsolute(href, requestUrl))
+        }
+
+        val metadataTags = doc.select("meta")
         metadataTags.forEach { metadata ->
             when (metadata.attr("name")) {
                 "theme-color" -> eyeCatch.themeColor(metadata.attr("content"))
@@ -49,13 +54,14 @@ fun convertPathRelativeToAbsolute(path: String, requestUrl: String): String {
 
     if (!requestUri.isAbsolute) throw Exception("""Request Url '$requestUri' is not absolute. """)
     if (pathUri.isAbsolute) return pathUri.toString()
+    if (pathUri.toString() == "") return ""
 
     return """${requestUri.scheme}://${requestUri.host}$pathUri"""
 }
 
-fun extractHref(vararg elements: Element?): String {
+fun extractHref(vararg elements: Element?): String? {
     val list = listOfNotNull(*elements)
-    if (list.isEmpty()) return ""
+    if (list.isEmpty()) return null
 
     return list.first().attr("href")
 }

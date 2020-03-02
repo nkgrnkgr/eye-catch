@@ -14,10 +14,10 @@ class EyeCatchService(
     fun createEyeCatchData(requestUrl: String): EyeCatch {
         try {
             val doc = Jsoup.connect(requestUrl).get()
-            logger.debug("""SuccessUrl : ${requestUrl}""")
+            logger.debug("""SuccessUrl : $requestUrl""")
             return eyeCatchBuilder.build(requestUrl, doc)
         } catch (error: Error) {
-            throw error;
+            throw error
         }
     }
 }

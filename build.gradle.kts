@@ -30,7 +30,7 @@ dependencies {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}
 	testImplementation("io.projectreactor:reactor-test")
-	ktlint("com.pinterest:ktlint:0.35.0")
+	ktlint("com.pinterest:ktlint:0.36.0")
 }
 
 
